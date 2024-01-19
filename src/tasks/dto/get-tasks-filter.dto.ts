@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional, IsString } from "class-validator";
-import { TaskStatus } from "../task.model";
+import { TaskStatus } from "../task.status.enum";
 
 export class GetTasksFilterDto {
     @IsOptional() // 필수가 아니라는 뜻
