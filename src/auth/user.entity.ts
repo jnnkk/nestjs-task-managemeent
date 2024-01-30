@@ -1,7 +1,8 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { AuthCredentialsDto } from "./dto/auth-credentials.dto";
 import { ConflictException, InternalServerErrorException } from "@nestjs/common";
 import * as bcrypt from 'bcrypt';
+import { Task } from "src/tasks/task.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -13,6 +14,9 @@ export class User extends BaseEntity {
 
     @Column()
     password: string;
+
+    @OneToMany(type => Task, task => task.user, { eager: true })
+    tasks: Task[];
 
     static async createUser(authCredentialsDto : AuthCredentialsDto): Promise<void> {
         const { username, password } = authCredentialsDto;
